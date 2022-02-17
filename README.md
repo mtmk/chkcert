@@ -5,7 +5,7 @@ site helping you to debug certificate issues you might have.
 
 Usage:
 ```
-chkcert <url>
+chkcert [-vvv] <url|host>
 ```
 
 ## Example

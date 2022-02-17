@@ -7,7 +7,7 @@ int Usage(int exit)
 {
     Console.Error.WriteLine($@"
   Usage:
-    chktls [-vvv] <url|host>
+    chkcert [-vvv] <url|host>
 ");
     return exit;
 }
@@ -15,6 +15,7 @@ int Usage(int exit)
 try
 {
     string url;
+    int verbosity = 0;
     
     switch (args.Length)
     {
@@ -28,6 +29,11 @@ try
         case 2 when !args[0].StartsWith("-"):
             return Usage(2);
         case 2:
+            foreach (var v in args[0].TrimStart('-'))
+            {
+                if (v != 'v') return Usage(2);
+                verbosity++;
+            }
             url = args[1];
             break;
         default:
@@ -37,7 +43,7 @@ try
     if (!url.StartsWith("http://") && !url.StartsWith("https://"))
         url = "https://" + url;
     
-    await new Checker().Go(url);
+    await new Checker(verbosity).Go(url);
 }
 catch (HttpRequestException e)
 {

@@ -1,48 +1,45 @@
-# Check TLS for Sites
+# Check X.509 Certificates for Sites
 
-`chktls` is a simple utility to show certificate information for a given web
+`chkcert` is a simple utility to show certificate information for a given web
 site helping you to debug certificate issues you might have.
 
 Usage:
 ```
-chktls <url>
+chkcert <url>
 ```
 
 ## Example
+
+List the certificate chain:
 ```
-$ chktls https://example.com
-GET https://example.com
-200 (OK)
-Age: 397410
-Cache-Control: max-age=604800
-Date: Thu, 17 Feb 2022 16:24:09 GMT
-[...]
-_______________________________________________________________________________________________________________________
-Certificate chain:
-  [0]         Version: 3
-         SerialNumber: 3084688434162232513624747060761048124
-             IssuerDN: C=US,O=DigiCert Inc,CN=DigiCert TLS RSA SHA256 2020 CA1
-           Start Date: 10/12/2021 00:00:00
-           Final Date: 09/12/2022 23:59:59
-            SubjectDN: C=US,ST=California,L=Los Angeles,O=Verizon Digital Media Services\, Inc.,CN=www.example.org
-[...]
-----
-  [0]         Version: 3
-         SerialNumber: 9101305761976670746388865003982847684
-             IssuerDN: C=US,O=DigiCert Inc,OU=www.digicert.com,CN=DigiCert Global Root CA
-           Start Date: 14/04/2021 00:00:00
-           Final Date: 13/04/2031 23:59:59
-            SubjectDN: C=US,O=DigiCert Inc,CN=DigiCert TLS RSA SHA256 2020 CA1
-[...]
-----
-  [0]         Version: 3
-         SerialNumber: 10944719598952040374951832963794454346
-             IssuerDN: C=US,O=DigiCert Inc,OU=www.digicert.com,CN=DigiCert Global Root CA
-           Start Date: 10/11/2006 00:00:00
-           Final Date: 10/11/2031 00:00:00
-            SubjectDN: C=US,O=DigiCert Inc,OU=www.digicert.com,CN=DigiCert Global Root CA
-[...]
+$ chkcert example.com
+https://example.com
+ Subject: CN=www.example.org, O="Verizon Digital Media Services, Inc.", L=Los Angeles, S=California, C=US
+  Issuer: CN=DigiCert TLS RSA SHA256 2020 CA1, O=DigiCert Inc, C=US
+
+ Subject: CN=DigiCert TLS RSA SHA256 2020 CA1, O=DigiCert Inc, C=US
+  Issuer: CN=DigiCert Global Root CA, OU=www.digicert.com, O=DigiCert Inc, C=US
+
+ Subject: CN=DigiCert Global Root CA, OU=www.digicert.com, O=DigiCert Inc, C=US
+  Issuer: CN=DigiCert Global Root CA, OU=www.digicert.com, O=DigiCert Inc, C=US
 ```
+
+Also display alternative names:
+```
+$ chkcert -v example.com
+https://example.com
+ Subject: CN=www.example.org, O="Verizon Digital Media Services, Inc.", L=Los Angeles, S=California, C=US
+  Issuer: CN=DigiCert TLS RSA SHA256 2020 CA1, O=DigiCert Inc, C=US
+  Others: www.example.org example.net example.edu example.com example.org www.example.com www.example.edu
+          www.example.net
+
+ Subject: CN=DigiCert TLS RSA SHA256 2020 CA1, O=DigiCert Inc, C=US
+  Issuer: CN=DigiCert Global Root CA, OU=www.digicert.com, O=DigiCert Inc, C=US
+
+ Subject: CN=DigiCert Global Root CA, OU=www.digicert.com, O=DigiCert Inc, C=US
+  Issuer: CN=DigiCert Global Root CA, OU=www.digicert.com, O=DigiCert Inc, C=US
+```
+Increase verbosity upto three `-vvv` to get more details.
 
 ## Installation
 

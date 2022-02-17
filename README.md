@@ -41,9 +41,44 @@ https://example.com
 ```
 Increase verbosity upto three `-vvv` to get more details.
 
+Also follows redirects:
+```
+$ chkcert google.com
+https://google.com
+ Subject: CN=*.google.com
+  Issuer: CN=GTS CA 1C3, O=Google Trust Services LLC, C=US
+
+ Subject: CN=GTS CA 1C3, O=Google Trust Services LLC, C=US
+  Issuer: CN=GTS Root R1, O=Google Trust Services LLC, C=US
+
+ Subject: CN=GTS Root R1, O=Google Trust Services LLC, C=US
+  Issuer: CN=GTS Root R1, O=Google Trust Services LLC, C=US
+
+https://www.google.com/
+ Subject: CN=www.google.com
+  Issuer: CN=GTS CA 1C3, O=Google Trust Services LLC, C=US
+
+ Subject: CN=GTS CA 1C3, O=Google Trust Services LLC, C=US
+  Issuer: CN=GTS Root R1, O=Google Trust Services LLC, C=US
+
+ Subject: CN=GTS Root R1, O=Google Trust Services LLC, C=US
+  Issuer: CN=GTS Root R1, O=Google Trust Services LLC, C=US
+
+https://consent.google.com/ml?continue=https://www.google.com/&gl=GB&m=0&pc=shp&hl=en&src=1
+ Subject: CN=*.google.com
+  Issuer: CN=GTS CA 1C3, O=Google Trust Services LLC, C=US
+
+ Subject: CN=GTS CA 1C3, O=Google Trust Services LLC, C=US
+  Issuer: CN=GTS Root R1, O=Google Trust Services LLC, C=US
+
+ Subject: CN=GTS Root R1, O=Google Trust Services LLC, C=US
+  Issuer: CN=GTS Root R1, O=Google Trust Services LLC, C=US
+```
+
 ## Installation
 
-Download macOS, Linux or Windows executables from the release page.
+Download macOS, Linux or Windows executables from the
+[releases page](https://github.com/mtmk/chkcert/releases).
 Copy the file somewhere in you PATH.
 
 ## Development

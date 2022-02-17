@@ -3,3 +3,4 @@ obj/
 dist/
 *.DotSettings
 .idea/
+.DS_Store
